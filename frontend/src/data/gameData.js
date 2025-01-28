@@ -1,6 +1,7 @@
 export const CATEGORIES = {
   ANIMALS: 'Animals',
   FRUITS: 'Fruits',
+  SHAPES: 'Shapes',
 };
 
 export const GAME_ITEMS = {
@@ -46,4 +47,22 @@ export const GAME_ITEMS = {
     { id: 'f14', image: '/fruits/avocado.jpg', audioSrc: '/audio/avocado.mp3', word: 'avocado' },
   ],
 
+  [CATEGORIES.SHAPES]: [
+    { id: 's1', image: '/shapes/circle.jpg', audioSrc: '/audio/circle.mp3', word: 'circle' },
+    { id: 's2', image: '/shapes/square.jpg', audioSrc: '/audio/square.mp3', word: 'square' },
+    { id: 's3', image: '/shapes/triangle.jpg', audioSrc: '/audio/triangle.mp3', word: 'triangle' },
+    { id: 's4', image: '/shapes/rectangle.jpg', audioSrc: '/audio/rectangle.mp3', word: 'rectangle' },
+    { id: 's5', image: '/shapes/star.jpg', audioSrc: '/audio/star.mp3', word: 'star' },
+    { id: 's6', image: '/shapes/heart.jpg', audioSrc: '/audio/heart.mp3', word: 'heart' },
+    { id: 's7', image: '/shapes/diamond.jpg', audioSrc: '/audio/diamond.mp3', word: 'diamond' },
+    { id: 's8', image: '/shapes/oval.jpg', audioSrc: '/audio/oval.mp3', word: 'oval' },
+    { id: 's9', image: '/shapes/crescent.jpg', audioSrc: '/audio/crescent.mp3', word: 'crescent' },
+    { id: 's10', image: '/shapes/cube.jpg', audioSrc: '/audio/cube.mp3', word: 'cube' },
+    { id: 's11', image: '/shapes/cylinder.jpg', audioSrc: '/audio/cylinder.mp3', word: 'cylinder' },
+    { id: 's12', image: '/shapes/arrow.jpg', audioSrc: '/audio/arrow.mp3', word: 'arrow' },
+    { id: 's13', image: '/shapes/cross.jpg', audioSrc: '/audio/cross.mp3', word: 'cross' },
+    { id: 's14', image: '/shapes/semicircle.jpg', audioSrc: '/audio/semicircle.mp3', word: 'semicircle' },
+    { id: 's15', image: '/shapes/trapezoid.jpg', audioSrc: '/audio/trapezoid.mp3', word: 'trapezoid' },
+    { id: 's16', image: '/shapes/parallelogram.jpg', audioSrc: '/audio/parallelogram.mp3', word: 'parallelogram' }
+  ],
 };
