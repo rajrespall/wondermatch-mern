@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import GameCompletionModal from './components/GameCompletionModal';
 import BingoCard from './components/BingoCard';
 import Settings from './components/Settings';
@@ -22,6 +23,8 @@ export default function App() {
   const [bgMusicTrack, setBgMusicTrack] = useState(() =>
     localStorage.getItem('bgMusicTrack') || '/music/track1.mp3');
   const bgMusicRef = useRef(new Audio(bgMusicTrack));
+  const [mistakes, setMistakes] = useState(0);
+  const [startTime, setStartTime] = useState(null);
 
   const playNextWord = () => {
     const unplayedItems = gameItems.filter(item => !playedWords.has(item.id));
@@ -30,6 +33,7 @@ export default function App() {
       playWord(nextItem);
     } else {
       setIsGameComplete(true);
+      saveGameData();
     }
   };
   const errorSound = useRef(new Audio('/sounds/error.mp3'));
@@ -45,6 +49,7 @@ export default function App() {
       // Play first word after game starts
       const firstItem = gameItems[0];
       playWord(firstItem);
+      setStartTime(Date.now());
     }
 
     return () => {
@@ -92,6 +97,7 @@ export default function App() {
     setScore(0);
     setPlayedWords(new Set());
     setCurrentAudio(null);
+    setMistakes(0);
   };
 
   const playWord = (selectedItem) => {
@@ -142,6 +148,7 @@ export default function App() {
       }, 1000); // 1 second delay
     } else {
       setWrongSelection(index);
+      setMistakes(prev => prev + 1);
       
       // Clear wrong selection after animation
       setTimeout(() => {
@@ -183,6 +190,25 @@ export default function App() {
     setScore(0);
     setPlayedWords(new Set());
     setCurrentAudio(null);
+    setMistakes(0);
+  };
+
+  const saveGameData = async () => {
+    const userId = 'user-id-placeholder'; // Replace with actual user ID
+    const timeTaken = Math.floor((Date.now() - startTime) / 1000); // Time in seconds
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/gameData/save', {
+        userId,
+        score,
+        category: currentCategory,
+        mistakes,
+        timeTaken
+      });
+      console.log(response.data.message);
+    } catch (error) {
+      console.error('Failed to save game data:', error);
+    }
   };
 
   return (
