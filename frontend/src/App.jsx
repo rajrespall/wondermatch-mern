@@ -25,6 +25,7 @@ export default function App() {
   const bgMusicRef = useRef(new Audio(bgMusicTrack));
   const [mistakes, setMistakes] = useState(0);
   const [startTime, setStartTime] = useState(null);
+  const GAME_AUDIO_VOLUME = 1.0;
 
   const playNextWord = () => {
     const unplayedItems = gameItems.filter(item => !playedWords.has(item.id));
@@ -84,11 +85,14 @@ export default function App() {
   };
 
   const startGame = () => {
-    // Create new game items based on current category
-    const newItems = getRandomItems(GAME_ITEMS[currentCategory], 9).map(item => ({
-      ...item,
-      audio: new Audio(item.audioSrc)
-    }));
+    const newItems = getRandomItems(GAME_ITEMS[currentCategory], 9).map(item => {
+      const audio = new Audio(item.audioSrc);
+      audio.volume = GAME_AUDIO_VOLUME; // Set volume for each audio element
+      return {
+        ...item,
+        audio
+      };
+    });
     
     setGameItems(newItems);
     setGameStarted(true);
@@ -98,6 +102,9 @@ export default function App() {
     setPlayedWords(new Set());
     setCurrentAudio(null);
     setMistakes(0);
+
+    // Set error sound volume
+    errorSound.current.volume = GAME_AUDIO_VOLUME;
   };
 
   const playWord = (selectedItem) => {
@@ -178,12 +185,16 @@ export default function App() {
       item.audio.pause();
       item.audio.currentTime = 0;
     });
-
-    const newItems = getRandomItems(GAME_ITEMS[currentCategory], 9).map(item => ({
-      ...item,
-      audio: new Audio(item.audioSrc)
-    }));
-
+  
+    const newItems = getRandomItems(GAME_ITEMS[currentCategory], 9).map(item => {
+      const audio = new Audio(item.audioSrc);
+      audio.volume = GAME_AUDIO_VOLUME; // Set volume for each audio element
+      return {
+        ...item,
+        audio
+      };
+    });
+  
     setGameItems(newItems);
     setMatches([]);
     setCurrentWord(null);
@@ -218,7 +229,7 @@ export default function App() {
       <div className="min-h-screen bg-gray-100 p-4">
         {!gameStarted ? (
           <div className="start-screen">
-          <h1 className="title">Audio Image Match</h1>
+          <h1 className="title">WonderMatch</h1>
           <div className="button-container">
             <button onClick={startGame} className="play-button">
               Start Game
@@ -250,7 +261,6 @@ export default function App() {
           <div className="max-w-2xl mx-auto">
 
             <header className="text-center mb-6">
-              <h1>AUDIO IMAGE MATCH</h1>
               <div className="score-display">SCORE: {score}</div>
             </header>
 
